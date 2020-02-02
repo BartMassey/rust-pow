@@ -5,7 +5,7 @@ pub fn pow_std(mut base: u32, mut exp: u32) -> u32 {
 
     while exp > 1 {
         if (exp & 1) == 1 {
-            acc = acc * base;
+            acc *= base;
         }
         exp /= 2;
         base = base * base;
@@ -15,7 +15,7 @@ pub fn pow_std(mut base: u32, mut exp: u32) -> u32 {
     // squaring the base afterwards is not necessary and may cause a
     // needless overflow.
     if exp == 1 {
-        acc = acc * base;
+        acc *= base;
     }
 
     acc
@@ -35,7 +35,7 @@ pub fn pow_std_2opt(mut base: u32, mut exp: u32) -> u32 {
     let mut acc = 1;
     while exp > 1 {
         if (exp & 1) == 1 {
-            acc = acc * base;
+            acc *= base;
         }
         exp /= 2;
         base = base * base;
@@ -45,7 +45,7 @@ pub fn pow_std_2opt(mut base: u32, mut exp: u32) -> u32 {
     // squaring the base afterwards is not necessary and may cause a
     // needless overflow.
     if exp == 1 {
-        acc = acc * base;
+        acc *= base;
     }
 
     acc
@@ -58,7 +58,7 @@ pub fn pow_alt(mut base: u32, mut exp: u32) -> u32 {
 
     loop {
         if (exp & 1) == 1 {
-            acc = acc * base;
+            acc *= base;
         }
         exp /= 2;
         if exp == 0 {
@@ -75,7 +75,7 @@ pub fn pow_alt_inline(mut base: u32, mut exp: u32) -> u32 {
 
     loop {
         if (exp & 1) == 1 {
-            acc = acc * base;
+            acc *= base;
         }
         exp /= 2;
         if exp == 0 {
@@ -99,7 +99,7 @@ pub fn pow_alt_2opt(mut base: u32, mut exp: u32) -> u32 {
     let mut acc = 1;
     loop {
         if (exp & 1) == 1 {
-            acc = acc * base;
+            acc *= base;
         }
         exp /= 2;
         if exp == 0 {
@@ -123,7 +123,7 @@ pub fn pow_alt_2opt_inline(mut base: u32, mut exp: u32) -> u32 {
     let mut acc = 1;
     loop {
         if (exp & 1) == 1 {
-            acc = acc * base;
+            acc *= base;
         }
         exp /= 2;
         if exp == 0 {
