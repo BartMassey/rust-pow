@@ -20,9 +20,12 @@ pub fn criterion_benchmark(c: &mut Criterion) {
     for arg in args {
         let mut group = c.benchmark_group(&format!("pow({}, {})", arg.0, arg.1));
         bench_pow!(group, "pow_std", pow_std, arg);
+        bench_pow!(group, "pow_std_2opt", pow_std_2opt, arg);
         bench_pow!(group, "pow_alt", pow_alt, arg);
+        bench_pow!(group, "pow_alt_2opt", pow_std_2opt, arg);
         bench_pow!(group, "u32::pow", (u32::pow), arg);
         bench_pow!(group, "pow_alt_inline", pow_alt_inline, arg);
+        bench_pow!(group, "pow_alt_2opt_inline", pow_alt_inline, arg);
     }
 }
 
