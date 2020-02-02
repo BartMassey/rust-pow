@@ -3,10 +3,10 @@ use pow::*;
 
 macro_rules! bench_pow {
     ($c: expr, $name:expr, $func:tt, $args:expr) => {{
-        let (b, e) = $args;
-        $c.bench_function(&format!("{}({},{})", $name, b, e), |b| b.iter(|| {
-            let (b, e) = black_box((2, 31));
-            $func(b, e)
+        let (base, exp) = $args;
+        $c.bench_function($name, |b| b.iter(|| {
+            let (base, exp) = black_box((base, exp));
+            $func(base, exp)
         }));
     }};
 }
@@ -22,6 +22,7 @@ pub fn criterion_benchmark(c: &mut Criterion) {
         bench_pow!(group, "pow_std", pow_std, arg);
         bench_pow!(group, "pow_alt", pow_alt, arg);
         bench_pow!(group, "u32::pow", (u32::pow), arg);
+        bench_pow!(group, "pow_alt_inline", pow_alt_inline, arg);
     }
 }
 

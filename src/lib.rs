@@ -21,9 +21,26 @@ pub fn pow_std(mut base: u32, mut exp: u32) -> u32 {
     acc
 }
 
-/// Alternate `pow()`.
+/// Alternate `pow()` uninlined.
 #[inline(never)]
 pub fn pow_alt(mut base: u32, mut exp: u32) -> u32 {
+    let mut acc = 1;
+
+    loop {
+        if (exp & 1) == 1 {
+            acc = acc * base;
+        }
+        exp /= 2;
+        if exp == 0 {
+            return acc;
+        }
+        base = base * base;
+    }
+}
+
+/// Alternate `pow()` always inlined.
+#[inline(always)]
+pub fn pow_alt_inline(mut base: u32, mut exp: u32) -> u32 {
     let mut acc = 1;
 
     loop {
