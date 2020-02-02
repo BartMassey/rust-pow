@@ -18,9 +18,10 @@ pub fn criterion_benchmark(c: &mut Criterion) {
         (3,18),
     ];
     for arg in args {
-        bench_pow!(c, "pow_std", pow_std, arg);
-        bench_pow!(c, "pow_alt", pow_alt, arg);
-        bench_pow!(c, "u32::pow", (u32::pow), arg);
+        let mut group = c.benchmark_group(&format!("pow({}, {})", arg.0, arg.1));
+        bench_pow!(group, "pow_std", pow_std, arg);
+        bench_pow!(group, "pow_alt", pow_alt, arg);
+        bench_pow!(group, "u32::pow", (u32::pow), arg);
     }
 }
 
