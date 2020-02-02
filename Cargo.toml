@@ -1,0 +1,12 @@
+[package]
+name = "pow"
+version = "0.1.0"
+authors = ["Bart Massey <bart.massey@gmail.com>"]
+edition = "2018"
+
+[dev-dependencies]
+criterion = "*"
+
+[[bench]]
+name = "bench"
+harness = false
