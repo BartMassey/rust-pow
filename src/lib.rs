@@ -65,3 +65,15 @@ fn test_pow_std_too_large() {
 fn test_pow_alt_too_large() {
     let _ = pow_alt(0x10000, 2);
 }
+
+#[cfg(debug_assertions)]
+#[test]
+fn test_pow_std_just_right() {
+    let _ = pow_std(0x10000, 1);
+}
+
+#[cfg(debug_assertions)]
+#[test]
+fn test_pow_alt_just_right() {
+    let _ = pow_alt(0x10000, 1);
+}
