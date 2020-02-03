@@ -1,4 +1,10 @@
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{
+    black_box,
+    criterion_group,
+    criterion_main,
+    Criterion,
+    BenchmarkId,
+};
 use pow::*;
 
 macro_rules! bench_pow {
@@ -31,7 +37,22 @@ pub fn criterion_benchmark(c: &mut Criterion) {
         bench_pow!(group, "u32::pow", (u32::pow), arg);
         bench_pow!(group, "pow_alt_inline", pow_alt_inline, arg);
         bench_pow!(group, "pow_alt_2opt_inline", pow_alt_2opt_inline, arg);
+        group.finish();
     }
+    let mut group = c.benchmark_group("pow(3, 0..18)");
+    for exp in 0..=18 {
+        group.bench_with_input(
+            BenchmarkId::new("pow_std", exp),
+            &exp,
+            |b, exp| b.iter(|| pow_std(3, *exp)),
+        );
+        group.bench_with_input(
+            BenchmarkId::new("pow_alt_012opt", exp),
+            &exp,
+            |b, exp| b.iter(|| pow_alt_012opt(3, *exp)),
+        );
+    }
+    group.finish();
 }
 
 criterion_group!(benches, criterion_benchmark);
