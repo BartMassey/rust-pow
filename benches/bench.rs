@@ -16,9 +16,9 @@ pub fn criterion_benchmark(c: &mut Criterion) {
         (0,31),
         (1,31),
         (2,31),
-        (4,7),
-        (7,11),
         (3,18),
+        (7,11),
+        (3,7),
     ];
     for arg in args {
         let mut group = c.benchmark_group(&format!("pow({}, {})", arg.0, arg.1));

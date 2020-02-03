@@ -6,9 +6,9 @@ fn test_ranges() {
         (0,31),
         (1,31),
         (2,31),
-        (4,7),
-        (7,11),
         (3,18),
+        (7,11),
+        (3,7),
     ];
     let funcs: Vec<(&str, fn(u32,u32)->u32)> = vec![
         ("pow_std", pow_std),
