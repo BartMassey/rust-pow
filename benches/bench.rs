@@ -13,7 +13,10 @@ macro_rules! bench_pow {
 
 pub fn criterion_benchmark(c: &mut Criterion) {
     let args = vec![
+        (0,31),
+        (1,31),
         (2,31),
+        (4,7),
         (7,11),
         (3,18),
     ];
@@ -22,10 +25,12 @@ pub fn criterion_benchmark(c: &mut Criterion) {
         bench_pow!(group, "pow_std", pow_std, arg);
         bench_pow!(group, "pow_std_2opt", pow_std_2opt, arg);
         bench_pow!(group, "pow_alt", pow_alt, arg);
-        bench_pow!(group, "pow_alt_2opt", pow_std_2opt, arg);
+        bench_pow!(group, "pow_alt_2opt", pow_alt_2opt, arg);
+        bench_pow!(group, "pow_alt_01opt", pow_alt_01opt, arg);
+        bench_pow!(group, "pow_alt_012opt", pow_alt_012opt, arg);
         bench_pow!(group, "u32::pow", (u32::pow), arg);
         bench_pow!(group, "pow_alt_inline", pow_alt_inline, arg);
-        bench_pow!(group, "pow_alt_2opt_inline", pow_alt_inline, arg);
+        bench_pow!(group, "pow_alt_2opt_inline", pow_alt_2opt_inline, arg);
     }
 }
 
