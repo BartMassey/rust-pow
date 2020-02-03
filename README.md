@@ -11,7 +11,10 @@ optimized function, performing many times faster, while also
 performing faster in the general case.
 
 Here is the
-[`criterion-rs` report](https://BartMassey.github.io/rust-pow/criterion-report/report/index.html) from my
-box.
+[`criterion-rs` report](https://BartMassey.github.io/rust-pow/criterion-report/report/index.html)
+from my box — an Intel Haswell i7-4770K 3.9GHz with 32GB RAM
+running Debian Linux. The benchmarks were *not* taken as
+root on a quiescent system, but there wasn't much load:
+pretty sure they had a core or two to themselves.
 
 See the source for details of the work.
