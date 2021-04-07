@@ -11,13 +11,19 @@ optimized cases, performing roughly twice as fast. The
 optimized function also performs 10-15% faster than `std` in
 the general case.
 
-Here is the
-[`criterion-rs` report](https://BartMassey.github.io/rust-pow/criterion-report/report/index.html)
-from my box — an Intel Haswell i7-4770K 3.9GHz with 32GB RAM
+* Here is the
+[`criterion-rs` report](https://BartMassey.github.io/rust-pow/criterion-report/report-ryzen9/index.html)
+from my latest box — an AMD Ryzen 9 3900X 3.8GHz with 32GB RAM
 running Debian Linux, compiled with the default options.
-Here is the
+
+* Here is the
+[`criterion-rs` report](https://BartMassey.github.io/rust-pow/criterion-report-haswell/report/index.html)
+from my older box — an Intel Haswell i7-4770K 3.9GHz with 32GB RAM
+running Debian Linux, compiled with the default options.
+
+* Here is the
 [`criterion-rs` report](https://BartMassey.github.io/rust-pow/criterion-report-i586/report/index.html)
-from the same box, but compiled using target
+from my older box, but compiled using target
 `i586-unknown-linux-musl` to get a sense of how different
 the results might be on a hypothetical 32-bit machine with
 no vector instructions.
