@@ -217,3 +217,33 @@ pub fn pow_alt_2opt_inline(mut base: u32, mut exp: u32) -> u32 {
         base = base * base;
     }
 }
+
+/// Alternate `pow()` uninlined with inline opts.
+#[inline(always)]
+pub fn pow_alt_inopt(mut base: u32, mut exp: u32) -> u32 {
+    if base & base.wrapping_sub(1) == 0 {
+    }
+
+    let mut acc = 1;
+    loop {
+        if base & base.wrapping_sub(1) == 0 {
+            if base <= 1 {
+                if exp == 0 {
+                    return acc;
+                }
+                return base;
+            }
+            let base_pow = base.trailing_zeros();
+            return 1 << (base_pow * exp);
+        }
+        if (exp & 1) == 1 {
+            acc *= base;
+        }
+        exp /= 2;
+        if exp == 0 {
+            return acc;
+        }
+        base = base * base;
+    }
+}
+
