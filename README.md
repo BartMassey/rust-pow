@@ -12,7 +12,7 @@ optimized function also performs 10-15% faster than `std` in
 the general case.
 
 * Here is the
-[`criterion-rs` report](https://BartMassey.github.io/rust-pow/criterion-report/report-ryzen9/index.html)
+[`criterion-rs` report](https://BartMassey.github.io/rust-pow/criterion-report-ryzen9/report/index.html)
 from my latest box — an AMD Ryzen 9 3900X 3.8GHz with 32GB RAM
 running Debian Linux, compiled with the default options.
 
