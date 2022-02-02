@@ -33,3 +33,7 @@ root on a quiescent system, but there wasn't much load:
 pretty sure they had a core or two to themselves.
 
 See the source for details of the work.
+
+Thanks to this
+[blog post](https://www.reddit.com/r/rust/comments/sh8u72/why_my_rust_benchmarks_were_wrong_or_how_to/)
+for pointing out where I was going wrong with `criterion::black_box()`.

@@ -11,8 +11,7 @@ macro_rules! bench_pow {
     ($c: expr, $name:expr, $func:tt, $args:expr) => {{
         let (base, exp) = $args;
         $c.bench_function($name, |b| b.iter(|| {
-            let (base, exp) = black_box((base, exp));
-            $func(base, exp)
+            black_box($func(black_box(base), black_box(exp)))
         }));
     }};
 }
@@ -44,12 +43,12 @@ pub fn criterion_benchmark(c: &mut Criterion) {
         group.bench_with_input(
             BenchmarkId::new("pow_std", exp),
             &exp,
-            |b, exp| b.iter(|| pow_std(3, *exp)),
+            |b, exp| b.iter(|| black_box(pow_std(black_box(3), black_box(*exp)))),
         );
         group.bench_with_input(
             BenchmarkId::new("pow_alt_012opt", exp),
             &exp,
-            |b, exp| b.iter(|| pow_alt_012opt(3, *exp)),
+            |b, exp| b.iter(|| black_box(pow_alt_012opt(black_box(3), black_box(*exp)))),
         );
     }
     group.finish();
