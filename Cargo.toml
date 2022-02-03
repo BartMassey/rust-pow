@@ -8,13 +8,20 @@ edition = "2018"
 version = "0.3"
 features = ["html_reports"]
 
-[dev-dependencies]
-criterion-perf-events = "0.1"
-perfcnt = "0.7"
+[dependencies.criterion-perf-events]
+version = "0.1"
+optional = true
+
+[dependencies.perfcnt]
+version = "0.7"
+optional = true
 
 [[bench]]
 name = "bench"
 harness = false
+
+[features]
+count-cycles = ["criterion-perf-events", "perfcnt"]
 
 [profile.release]
 opt-level=3

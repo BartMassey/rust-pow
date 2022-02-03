@@ -4,10 +4,8 @@ use criterion::{
     criterion_main,
     BenchmarkId,
     Criterion,
+    measurement::Measurement,
 };
-use criterion_perf_events::Perf;
-use perfcnt::linux::HardwareEventType as Hardware;
-use perfcnt::linux::PerfCounterBuilderLinux as Builder;
 
 use pow::*;
 
@@ -28,7 +26,7 @@ macro_rules! bench_pow {
     }};
 }
 
-pub fn criterion_benchmark(c: &mut Criterion<Perf>) {
+pub fn criterion_benchmark<P: Measurement>(c: &mut Criterion<P>) {
     #[rustfmt::ignore]
     let args = &[
         (0, 63),
@@ -52,11 +50,25 @@ pub fn criterion_benchmark(c: &mut Criterion<Perf>) {
     bench_pow!(c, "pow_alt_2opt_inline", pow_alt_2opt_inline, args);
 }
 
-criterion_group!(
-    name = benches;
-    config = Criterion::default().with_measurement(
-        Perf::new(Builder::from_hardware_event(Hardware::Instructions))
+#[cfg(feature = "count-cycles")]
+mod cg {
+    use super::*;
+    use criterion_perf_events::Perf;
+    use perfcnt::linux::HardwareEventType as Hardware;
+    use perfcnt::linux::PerfCounterBuilderLinux as Builder;
+    criterion_group!(
+        name = benches;
+        config = Criterion::default().with_measurement(
+            Perf::new(Builder::from_hardware_event(Hardware::Instructions))
+        );
+        targets = criterion_benchmark
     );
-    targets = criterion_benchmark
-);
-criterion_main!(benches);
+}
+
+#[cfg(not(feature = "count-cycles"))]
+mod cg {
+    use super::*;
+    criterion_group!(benches, criterion_benchmark);
+}
+
+criterion_main!(cg::benches);

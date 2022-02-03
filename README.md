@@ -7,32 +7,32 @@ speedup for Rust's `u32::pow()` implementation.
 
 This also shows experiments with optimizing for bases 0, 1,
 and power-of-2. It turns out to be a big win for the
-optimized cases, performing roughly twice as fast. The
-optimized function also performs 10-15% faster than `std` in
-the general case.
+optimized cases. The optimized function also performs a
+little faster than `std` in the general case.
 
-* Here is the
-[`criterion-rs` report](https://BartMassey.github.io/rust-pow/criterion-report-ryzen9/report/index.html)
-from my latest box — an AMD Ryzen 9 3900X 3.8GHz with 32GB RAM
-running Debian Linux, compiled with the default options.
+The benchmarks should be runnable on stable Rust on most any
+platform using `cargo bench`. They will report wall-clock
+time, which is pretty fuzzy for these kinds of measurements.
 
-* Here is the
-[`criterion-rs` report](https://BartMassey.github.io/rust-pow/criterion-report-haswell/report/index.html)
-from my older box — an Intel Haswell i7-4770K 3.9GHz with 32GB RAM
-running Debian Linux, compiled with the default options.
+On Linux-compatible platforms, instruction cycle counting
+using hardware performance counters can be enabled via the
+`count-cycles` feature. This will require nightly Rust
+(because `asm` isn't stabilized quite yet) and running as
+root (to get access to the performance counters). You can
+run much shorter per benchmark, since the cycle counter is
+pretty accurate. (It would be nice to run less than a
+second, so I will work on
+[this issue](https://github.com/bheisler/criterion.rs/issues/551).)
+Run it all like this:
 
-* Here is the
-[`criterion-rs` report](https://BartMassey.github.io/rust-pow/criterion-report-i586/report/index.html)
-from my older box, but compiled using target
-`i586-unknown-linux-musl` to get a sense of how different
-the results might be on a hypothetical 32-bit machine with
-no vector instructions.
+```
+rustup override set nightly-2022-01-19
+sudo cargo bench --features=count-cycles --bench=bench -- \
+  --measurement-time=1 --warm-up-time=1
+```
 
-The benchmarks were *not* taken as
-root on a quiescent system, but there wasn't much load:
-pretty sure they had a core or two to themselves.
-
-See the source for details of the work.
+Many thanks to the authors of the `criterion`,
+`criterion-perf-events` and `perfcnt` crates.
 
 Thanks to this
 [blog post](https://www.reddit.com/r/rust/comments/sh8u72/why_my_rust_benchmarks_were_wrong_or_how_to/)
