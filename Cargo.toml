@@ -8,11 +8,15 @@ edition = "2018"
 version = "0.3"
 features = ["html_reports"]
 
+[dev-dependencies]
+criterion-perf-events = "0.1"
+perfcnt = "0.7"
+
 [[bench]]
 name = "bench"
 harness = false
 
 [profile.release]
 opt-level=3
-lto=true
-codegen-units=1
+#lto=true
+#codegen-units=1

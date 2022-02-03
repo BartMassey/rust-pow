@@ -5,6 +5,10 @@ use criterion::{
     BenchmarkId,
     Criterion,
 };
+use criterion_perf_events::Perf;
+use perfcnt::linux::HardwareEventType as Hardware;
+use perfcnt::linux::PerfCounterBuilderLinux as Builder;
+
 use pow::*;
 
 macro_rules! bench_pow {
@@ -24,7 +28,7 @@ macro_rules! bench_pow {
     }};
 }
 
-pub fn criterion_benchmark(c: &mut Criterion) {
+pub fn criterion_benchmark(c: &mut Criterion<Perf>) {
     #[rustfmt::ignore]
     let args = &[
         (0, 63),
@@ -48,5 +52,11 @@ pub fn criterion_benchmark(c: &mut Criterion) {
     bench_pow!(c, "pow_alt_2opt_inline", pow_alt_2opt_inline, args);
 }
 
-criterion_group!(benches, criterion_benchmark);
+criterion_group!(
+    name = benches;
+    config = Criterion::default().with_measurement(
+        Perf::new(Builder::from_hardware_event(Hardware::Instructions))
+    );
+    targets = criterion_benchmark
+);
 criterion_main!(benches);
