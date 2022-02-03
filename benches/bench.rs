@@ -9,20 +9,18 @@ use pow::*;
 
 macro_rules! bench_pow {
     ($c: expr, $name:expr, $func:tt, $args:expr) => {{
-        let mut group = $c.benchmark_group($name);
-        for (base, max_exp) in $args {
-            let id = base.to_string();
-            for exp in 0..=*max_exp {
-                group.bench_with_input(
-                    BenchmarkId::new(&id, exp),
-                    &exp,
-                    |b, exp| b.iter(|| {
-                        black_box($func(black_box(*base), black_box(*exp)))
+        for &(base, max_exp) in $args {
+            let mut group = $c.benchmark_group($name);
+            for exp in 0..=max_exp {
+                group.bench_function(
+                    BenchmarkId::new(base.to_string(), exp),
+                    |b| b.iter(|| {
+                        black_box($func(black_box(base), black_box(exp)))
                     }),
                 );
             }
+            group.finish();
         }
-        group.finish();
     }};
 }
 
