@@ -20,15 +20,18 @@ using hardware performance counters can be enabled via the
 (because `asm` isn't stabilized quite yet) and running as
 root (to get access to the performance counters). You can
 run much shorter per benchmark, since the cycle counter is
-pretty accurate. (It would be nice to run less than a
-second, so I will work on
-[this issue](https://github.com/bheisler/criterion.rs/issues/551).)
-Run it all like this:
+pretty accurate. (It is nice to run each benchmark in less
+than a second, but as of version 0.3.5 standard
+`criterion.rs` doesn't allow that. I have filed this issue
+[this issue](https://github.com/bheisler/criterion.rs/issues/551);
+this repo builds against my local `criterion.rs`
+[fork](https://github.com/BartMassey-upstream/criterion.rs)
+for now.)  Run it all like this:
 
 ```
 rustup override set nightly-2022-01-19
 sudo cargo bench --features=count-cycles --bench=bench -- \
-  --measurement-time=1 --warm-up-time=1
+  --measurement-time=0.1 --warm-up-time=0.1
 ```
 
 Many thanks to the authors of the `criterion`,
